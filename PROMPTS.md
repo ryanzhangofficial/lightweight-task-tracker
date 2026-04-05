@@ -78,3 +78,58 @@ This file maps each feature prompt to its corresponding CHANGELOG entry. Use the
 - `src/components/ExamTracker.tsx` (CSS variable migration)
 - `src/components/StudyLogger.tsx` (CSS variable migration)
 - `src/components/HabitTracker.tsx` (CSS variable migration)
+
+---
+
+## [0.3.0] — Interactive Calendar
+
+### Prompt: Calendar Feature
+
+> Please add a calendar feature on the main dashboard. It should be interactive and display the exams/tasks that are available.
+
+**What was built:**
+- Monthly calendar view with prev/next navigation buttons
+- Color-coded dots on days with scheduled exams (matches exam color)
+- Click-to-expand day details with smooth AnimatePresence animation
+- Shows both exams and study sessions for selected day
+- Today highlighted with accent background
+- Past days dimmed for visual hierarchy
+- Compact responsive grid (7 columns for week days)
+- Only appears when user has exams to display
+
+**Key files created/modified:**
+- `src/components/Calendar.tsx` (new)
+- `src/components/Dashboard.tsx` (integrated Calendar)
+
+---
+
+### Prompt: Calendar Layout Fix
+
+> The calendar is rather large right now. Please make the calendar be in the same row as the "Upcoming exams"
+
+**What was changed:**
+- Calendar and Upcoming Exams now display side-by-side in a 2-column grid
+- Added `compact` prop to Calendar component with smaller day labels, buttons, and font sizes
+- Upcoming Exams list now has `max-h-48 overflow-y-auto` for scrollable overflow
+- Dashboard uses `grid-cols-1 lg:grid-cols-2` for responsive side-by-side layout
+
+**Key files modified:**
+- `src/components/Dashboard.tsx` (grid layout with lg breakpoint)
+- `src/components/Calendar.tsx` (compact prop, smaller sizing)
+
+---
+
+### Prompt: Calendar Order & Selected Day Visibility
+
+> The Calendar should be on the Left and Upcoming Exams on the right. The calendar should have a slightly longer width compared to the upcoming exams because there is a lot of space between The test and date and the {}d remaining. When clicking on a date with an exam, the information on the bottom does not stand out.
+
+**What was changed:**
+- Swapped layout order: Calendar LEFT (col-span-3), Upcoming Exams RIGHT (col-span-2)
+- Changed grid from `lg:grid-cols-2` to `grid-cols-5` for finer control
+- Enhanced compact mode selected day info with accent background and border
+- Exam badges now use solid accent background instead of soft accent
+- Date and item info is now bold and more prominent
+
+**Key files modified:**
+- `src/components/Dashboard.tsx` (col-span-3 and col-span-2 layout)
+- `src/components/Calendar.tsx` (prominent selected day styling)

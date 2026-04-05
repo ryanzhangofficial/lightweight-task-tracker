@@ -2,6 +2,7 @@
 
 import { useApp } from '@/store/AppContext';
 import { format, differenceInDays } from 'date-fns';
+import { Calendar } from '@/components/Calendar';
 
 const cardCls = 'border rounded-xl p-4 transition-colors duration-300';
 const mutedCls = 'text-xs font-medium uppercase tracking-wider';
@@ -58,33 +59,42 @@ export function Dashboard() {
         ))}
       </div>
 
-      {upcomingExams.length > 0 && (
-        <Card className="p-5">
-          <h2 className={`text-sm font-semibold ${mutedCls} mb-4`} style={{ color: 'var(--muted)' }}>Upcoming Exams</h2>
-          <div className="space-y-3">
-            {upcomingExams.map(exam => {
-              const daysLeft = differenceInDays(new Date(exam.date), new Date());
-              return (
-                <div key={exam.id} className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: exam.color }} />
-                    <div>
-                      <p className="font-medium text-sm">{exam.name}</p>
-                      <p className="text-xs mt-0.5" style={{ color: 'var(--muted)' }}>{format(new Date(exam.date), 'MMMM d, yyyy')}</p>
-                    </div>
-                  </div>
-                  <div className={`px-3 py-1 rounded-full text-xs font-medium ${
-                    daysLeft <= 7 ? 'bg-red-500/10 text-red-400' :
-                    daysLeft <= 30 ? 'bg-amber-500/10 text-amber-400' :
-                    'bg-emerald-500/10 text-emerald-400'
-                  }`}>
-                    {daysLeft === 0 ? 'Today' : `${daysLeft}d left`}
-                  </div>
-                </div>
-              );
-            })}
+      {exams.length > 0 && (
+        <div className="grid grid-cols-5 gap-4">
+          <div className="col-span-3">
+            <Card className="p-4">
+              <Calendar compact />
+            </Card>
           </div>
-        </Card>
+          <div className="col-span-2">
+            <Card className="p-4">
+              <h2 className={`text-sm font-semibold ${mutedCls} mb-3`} style={{ color: 'var(--muted)' }}>Upcoming Exams</h2>
+              <div className="space-y-3 max-h-48 overflow-y-auto">
+                {upcomingExams.map(exam => {
+                  const daysLeft = differenceInDays(new Date(exam.date), new Date());
+                  return (
+                    <div key={exam.id} className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: exam.color }} />
+                        <div>
+                          <p className="font-medium text-sm">{exam.name}</p>
+                          <p className="text-xs mt-0.5" style={{ color: 'var(--muted)' }}>{format(new Date(exam.date), 'MMM d')}</p>
+                        </div>
+                      </div>
+                      <div className={`px-2.5 py-1 rounded-full text-xs font-medium ${
+                        daysLeft <= 7 ? 'bg-red-500/10 text-red-400' :
+                        daysLeft <= 30 ? 'bg-amber-500/10 text-amber-400' :
+                        'bg-emerald-500/10 text-emerald-400'
+                      }`}>
+                        {daysLeft === 0 ? 'Today' : `${daysLeft}d`}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </Card>
+          </div>
+        </div>
       )}
 
       {todaySessions.length > 0 && (

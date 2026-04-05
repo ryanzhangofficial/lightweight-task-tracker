@@ -107,3 +107,62 @@ All notable changes to this project will be documented in this file.
 
 #### Dependencies Added
 - None (uses existing `framer-motion` for toggle animation)
+
+## [0.3.0] - 2026-04-05
+
+### Interactive Calendar on Dashboard
+
+#### Added
+- **Calendar component** (`src/components/Calendar.tsx`)
+  - Monthly view with prev/next navigation
+  - Visual dots on days with exams (color-coded by exam color)
+  - Interactive day selection with smooth expand/collapse animation
+  - Shows both exams and study sessions for selected day
+  - Today indicator with accent color highlight
+  - Past days dimmed
+  - Responsive compact grid layout
+  - Reason: Quick visual overview of upcoming exams and study sessions at a glance
+
+- **Updated Dashboard** (`src/components/Dashboard.tsx`)
+  - Integrated Calendar component
+  - Calendar only shows when exams exist
+  - Reason: Keep dashboard clean until user has data to display
+
+#### Dependencies Added
+- None (uses existing `date-fns` for date manipulation)
+
+## [0.3.1] - 2026-04-05
+
+### Calendar Layout Fix
+
+#### Changed
+- **Calendar and Upcoming Exams side-by-side layout**
+  - Calendar and Upcoming Exams now share a grid row on larger screens
+  - Compact mode added to Calendar component with smaller sizing
+  - Updated Dashboard grid: `lg:grid-cols-2` for side-by-side layout
+  - Upcoming Exams list now has max-height with scroll for overflow
+  - Reason: Better space utilization on dashboard, both widgets visible at once
+
+#### Files Modified
+- `src/components/Dashboard.tsx` — grid layout, compact Card wrappers
+- `src/components/Calendar.tsx` — added `compact` prop, smaller sizing variants
+
+## [0.3.2] - 2026-04-05
+
+### Calendar Layout & Selected Day Fix
+
+#### Changed
+- **Dashboard grid layout reordering**
+  - Calendar now on LEFT side, Upcoming Exams on RIGHT side
+  - Grid uses `grid-cols-5` with Calendar taking `col-span-3` and Upcoming Exams taking `col-span-2`
+  - Reason: Better visual balance, Calendar needs more space
+
+- **Prominent selected day info in compact mode**
+  - Selected day panel now uses accent color background with accent border
+  - Exam badge uses filled accent background (not just soft accent)
+  - Bold "Exam" labels stand out more
+  - Reason: Selected day info was not visible enough before
+
+#### Files Modified
+- `src/components/Dashboard.tsx` — grid columns reordered (3:2 ratio)
+- `src/components/Calendar.tsx` — enhanced compact mode selected day styling
